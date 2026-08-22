@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFile, writeFile } from "node:fs/promises";
 import { stdin } from "node:process";
+import { adaptAgtAuditCloudEvent } from "./adapters/agt.js";
 import { authorizationEnvelope, digestArguments } from "./contracts.js";
 import { attestorFromPrivateKey, createEvidenceBundle, exportPrivateKey, generateAttestor, trustAnchor, verifyEvidenceBundle } from "./evidence.js";
 import { bindingTrustAnchor, createWorkloadBinding } from "./identity.js";
@@ -75,6 +76,15 @@ async function verifyBundle(args) {
   if (!valid) process.exitCode = 1;
 }
 
+async function agtAdapt(args) {
+  const value = options(args);
+  requireOptions(value, ["event", "context", "out"]);
+  const result = adaptAgtAuditCloudEvent(await loadJson(value.event), await loadJson(value.context));
+  await writeFile(value.out, `${JSON.stringify(result, null, 2)}\n`, { mode: 0o644 });
+  console.log(JSON.stringify({ disposition: result.disposition, verifiable: result.verifiable, captureGaps: result.captureGaps.length, output: value.out }));
+  if (result.disposition === "capture_incomplete") process.exitCode = 3;
+}
+
 async function demo() {
   const authorization = authorizationEnvelope(await loadJson(new URL("../examples/authorization.json", import.meta.url)));
   const events = await loadJson(new URL("../examples/tetragon-events.json", import.meta.url));
@@ -98,9 +108,9 @@ async function demo() {
 }
 
 const [command, ...args] = process.argv.slice(2);
-const commands = { demo, keygen, bind, attest, verify: verifyBundle };
+const commands = { demo, keygen, bind, attest, verify: verifyBundle, "agt-adapt": agtAdapt };
 if (!commands[command]) {
-  console.error("Usage: effectproof <demo|keygen|bind|attest|verify> [options]");
+  console.error("Usage: effectproof <demo|keygen|bind|attest|verify|agt-adapt> [options]");
   process.exitCode = 2;
 } else {
   commands[command](args).catch((error) => {

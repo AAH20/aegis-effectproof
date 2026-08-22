@@ -1,0 +1,20 @@
+{
+  "specversion": "1.0",
+  "id": "agt-entry-1042",
+  "type": "ai.agentmesh.policy.evaluation",
+  "source": "agent:soc-remediator",
+  "time": "2026-08-22T12:00:00.000Z",
+  "datacontenttype": "application/json",
+  "data": {
+    "action": "file.open",
+    "resource": "/evidence/case-1042.json",
+    "outcome": "success",
+    "policy_decision": "allow",
+    "matched_rule": "allow-case-evidence",
+    "policy_version": "42",
+    "arguments_hash": "c97812e4d275135bfad98e0720d2310c85c0aa7f02ef8b933893d699c0cffe1f",
+    "approver_did": "user:security-lead@example.com"
+  },
+  "traceid": "trace-1042",
+  "sessionid": "agt-session-1042"
+}

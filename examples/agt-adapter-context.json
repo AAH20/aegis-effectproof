@@ -1,0 +1,9 @@
+{
+  "workloadId": "k8s:security/soc-remediator-0",
+  "nativeToolCallId": "call-remediate-1042",
+  "effect": "read",
+  "policyDigest": "sha256:4e50567e237e7af91ad2cc147858f1cc97e4f8864c8ade7d0fd10fd595bf2078",
+  "policyComplete": true,
+  "expiresAt": "2026-08-22T12:01:00.000Z",
+  "nonce": "nonce-01K36R6AWT"
+}

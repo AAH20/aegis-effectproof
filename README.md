@@ -99,6 +99,24 @@ The implementation is grounded in active upstream gaps:
 - Fail-loud handling of degraded attribution.
 - Ed25519 evidence bundles and offline verification.
 
+## Microsoft AGT adapter
+
+`adaptAgtAuditCloudEvent()` converts AGT audit CloudEvents into authorization envelopes only when every trust-boundary field is capturable. It accepts AGT-native `agent_did`, action, resource, argument hash, approver and policy version, then requires trusted deployment evidence for workload identity, native tool-call identity, policy-bundle digest/completeness, expiry and nonce.
+
+`inspectAgtSidecarDecision()` reports the gaps in the current AGT `EvaluateResponse`; it does not invent missing identifiers. In particular, AGT `session_id` is never treated as a native framework tool-call ID.
+
+The reference fixtures are:
+
+- `examples/agt-audit-cloudevent.json`
+- `examples/agt-adapter-context.json`
+
+```bash
+effectproof agt-adapt --event examples/agt-audit-cloudevent.json \
+  --context examples/agt-adapter-context.json --out authorization-result.json
+```
+
+This maps directly to AGT issues [#3562](https://github.com/microsoft/agent-governance-toolkit/issues/3562) and [#3613](https://github.com/microsoft/agent-governance-toolkit/issues/3613). The adapter remains external until AGT maintainers approve an integration location.
+
 The repository does not claim that a Kubernetes pod name alone is a cryptographic workload identity. The next milestone binds short-lived workload identity to cgroup/process identity and verifies a real Tetragon stream on Linux.
 
 ## Related Aegis systems
