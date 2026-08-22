@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://effectproof.dev/schemas/authorization-v0.1.json",
+  "title": "EffectProof authorization envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionId", "agentId", "principal", "workloadId", "toolCallId", "operation", "target", "effect", "argumentsDigest", "policyId", "policyGeneration", "policyDigest", "policyComplete", "issuedAt", "expiresAt", "nonce"],
+  "properties": {
+    "schemaVersion": { "const": "effectproof.dev/authorization/v0.1" },
+    "decisionId": { "$ref": "#/$defs/nonEmpty" },
+    "agentId": { "$ref": "#/$defs/nonEmpty" },
+    "principal": { "$ref": "#/$defs/nonEmpty" },
+    "workloadId": { "$ref": "#/$defs/nonEmpty" },
+    "toolCallId": { "$ref": "#/$defs/nonEmpty" },
+    "operation": { "$ref": "#/$defs/nonEmpty" },
+    "target": { "$ref": "#/$defs/nonEmpty" },
+    "effect": { "$ref": "#/$defs/nonEmpty" },
+    "argumentsDigest": { "$ref": "#/$defs/sha256" },
+    "policyId": { "$ref": "#/$defs/nonEmpty" },
+    "policyGeneration": { "$ref": "#/$defs/nonEmpty" },
+    "policyDigest": { "$ref": "#/$defs/sha256" },
+    "policyComplete": { "type": "boolean" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "nonce": { "$ref": "#/$defs/nonEmpty" }
+  },
+  "$defs": {
+    "nonEmpty": { "type": "string", "minLength": 1 },
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

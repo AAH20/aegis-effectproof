@@ -8,6 +8,13 @@
   "bin": {
     "effectproof": "src/cli.js"
   },
+  "files": [
+    "docs",
+    "examples",
+    "schemas",
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "test": "node --test test/*.test.js",
     "demo": "node src/cli.js demo"

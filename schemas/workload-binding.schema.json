@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://effectproof.dev/schemas/workload-binding-v0.1.json",
+  "title": "Signed EffectProof workload binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["payload", "signature"],
+  "properties": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "bindingId", "issuer", "agentId", "workloadId", "podUid", "cgroupId", "validFrom", "validUntil"],
+      "properties": {
+        "schemaVersion": { "const": "effectproof.dev/workload-binding/v0.1" },
+        "bindingId": { "type": "string", "minLength": 1 },
+        "issuer": { "type": "string", "minLength": 1 },
+        "agentId": { "type": "string", "minLength": 1 },
+        "workloadId": { "type": "string", "minLength": 1 },
+        "podUid": { "type": "string", "minLength": 1 },
+        "cgroupId": { "type": "string", "minLength": 1 },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validUntil": { "type": "string", "format": "date-time" }
+      }
+    },
+    "signature": { "type": "string", "contentEncoding": "base64" }
+  }
+}
