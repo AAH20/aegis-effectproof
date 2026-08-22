@@ -1,0 +1,26 @@
+{
+  "name": "aegis-effectproof",
+  "version": "0.1.0",
+  "description": "Independent kernel-observed execution attestation for autonomous AI agents.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": "./src/index.js",
+  "bin": {
+    "effectproof": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo": "node src/cli.js demo"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "agentic-ai-security",
+    "ebpf",
+    "tetragon",
+    "runtime-security",
+    "attestation"
+  ],
+  "license": "Apache-2.0"
+}
